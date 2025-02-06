@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import fitz  
+import pdfplumber  
 from database import Database
 import openai
 import os
@@ -70,7 +70,7 @@ def upload_pdf():
     file.save(pdf_path)
 
     # Extract text from PDF
-    doc = fitz.open(pdf_path)
+    doc = pdfplumber.open(pdf_path)
     text_content = "\n".join([page.get_text() for page in doc])
 
     # Store extracted text in MongoDB using chunking

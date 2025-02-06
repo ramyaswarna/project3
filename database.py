@@ -1,6 +1,6 @@
 import pymongo
 import os
-import fitz  # PyMuPDF for text extraction
+import pdfplumber # PyMuPDF for text extraction
 from model_loader import ModelLoader
 from dotenv import load_dotenv
 from bson import ObjectId  # Import ObjectId from bson
