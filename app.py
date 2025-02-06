@@ -100,46 +100,46 @@ def upload_pdf():
 #         "ai_answer": refined_answer
 #         # "retrieved_chunks": relevant_chunks  #
 #     })
-# @app.route("/search", methods=["GET","POST"])
-# def search():
-#     """API Endpoint to perform vector search and return both VectorDB and LLM response."""
-#     query = request.args.get("query")
-#     if not query:
-#         return jsonify({"error": "Query parameter is required"}), 400
-
-#     relevant_chunks = db.query_database(query)
-
-#     if not relevant_chunks:
-#         return jsonify({
-#             "message": "No matching results found",
-#             "vector_db_output": []
-#         }), 200
-
-#     refined_answer = generate_answer_with_llm(query, relevant_chunks)
-
-#     return jsonify({
-#         "query": query,
-#         "ai_answer": refined_answer,
-#         "vector_db_output": relevant_chunks  
-#     })
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search", methods=["GET","POST"])
 def search():
+    """API Endpoint to perform vector search and return both VectorDB and LLM response."""
     query = request.args.get("query")
-
     if not query:
         return jsonify({"error": "Query parameter is required"}), 400
 
-    try:
-        db = get_database()  #  Create database connection inside the request
-        collection = db["your_collection_name"]
-        relevant_chunks = list(collection.find({"content": {"$regex": query, "$options": "i"}}))
-        
-        return jsonify({
-            "query": query,
-            "vector_db_output": relevant_chunks
-        })
-    except Exception as e:
-        return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
+    relevant_chunks = db.query_database(query)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    if not relevant_chunks:
+        return jsonify({
+            "message": "No matching results found",
+            "vector_db_output": []
+        }), 200
+
+    refined_answer = generate_answer_with_llm(query, relevant_chunks)
+
+    return jsonify({
+        "query": query,
+        "ai_answer": refined_answer,
+        "vector_db_output": relevant_chunks  
+    })
+# @app.route("/search", methods=["GET", "POST"])
+# def search():
+#     query = request.args.get("query")
+
+#     if not query:
+#         return jsonify({"error": "Query parameter is required"}), 400
+
+#     try:
+#         db = get_database()  #  Create database connection inside the request
+#         collection = db["your_collection_name"]
+#         relevant_chunks = list(collection.find({"content": {"$regex": query, "$options": "i"}}))
+        
+#         return jsonify({
+#             "query": query,
+#             "vector_db_output": relevant_chunks
+#         })
+#     except Exception as e:
+#         return jsonify({"error": f"Internal Server Error: {str(e)}"}), 500
+
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=5000)
