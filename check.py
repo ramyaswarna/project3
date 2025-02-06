@@ -1,3 +1,5 @@
-import fitz
+from pymongo import MongoClient
+import os
 
-print("PyMuPDF imported successfully!")
+client = MongoClient(os.getenv("MONGO_URI"))
+print(client.list_database_names())  # Should return database names
