@@ -1,1 +1,5 @@
-web: gunicorn -w 1 -k gthread -t 120 app2:app
+web: gunicorn app2:app \
+   --workers 1 \
+   --worker-class uvicorn.workers.UvicornWorker \
+   --bind 0.0.0.0:8443 \
+   --timeout 600
