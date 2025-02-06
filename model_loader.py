@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 # Load API key from .env
 load_dotenv()
 
-# Print the API key for debugging
-print("🔑 OpenAI API Key Loaded:", os.getenv("OPENAI_API_KEY"))
+# # Print the API key for debugging
+# print("  OpenAI API Key Loaded:", os.getenv("OPENAI_API_KEY"))
 
 # Set the API key in OpenAI
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -18,11 +18,17 @@ class ModelLoader:
     def generate_embedding(self, text):
         """Generates embeddings using OpenAI"""
         try:
-            response = openai.Embedding.create(
-                model=self.model,
-                input=text[:3000]
+            # response = openai.Embedding.create(
+            #     model=self.model,
+            #     input=text[:3000]
+            # )
+            # embedding = response["data"][0]["embedding"]
+            response = openai.embeddings.create(
+                model="text-embedding-ada-002",
+                input=[text]
             )
-            embedding = response["data"][0]["embedding"]
+            embedding = response.data[0].embedding
+
             if len(embedding) == 1536:
                 return embedding
             else:
