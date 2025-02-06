@@ -1,0 +1,8 @@
+# Ignore environment files
+.env
+
+# Ignore __pycache__ directories
+__pycache__/
+
+# Ignore any other sensitive files
+*.pyc
