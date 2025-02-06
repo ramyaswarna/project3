@@ -13,7 +13,6 @@ app = Flask(__name__)
 db = Database()
 
 def generate_answer_with_llm(query, chunks):
-    """Uses OpenAI GPT model to generate an answer from the retrieved text chunks."""
     if not chunks:
         return "No relevant information found in the database."
 
